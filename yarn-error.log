@@ -1,0 +1,54 @@
+Arguments: 
+  /home/auntik/.nvm/versions/node/v16.13.0/bin/node /home/auntik/.yarn/releases/yarn-1.22.11.cjs add express dotenv ejs mongoose multer cookie-parser express-validatorjsonwebtoken bcrypt http-errors
+
+PATH: 
+  /home/auntik/Android/Sdk/platform-tools:/home/auntik/.nvm/versions/node/v16.13.0/bin:/home/auntik/Android/Sdk/platform-tools:/home/auntik/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
+
+Yarn version: 
+  1.22.11
+
+Node version: 
+  16.13.0
+
+Platform: 
+  linux x64
+
+Trace: 
+  Error: https://registry.yarnpkg.com/express-validatorjsonwebtoken: Not found
+      at Request.params.callback [as _callback] (/home/auntik/.yarn/releases/yarn-1.22.11.cjs:78522:18)
+      at Request.self.callback (/home/auntik/.yarn/releases/yarn-1.22.11.cjs:135174:22)
+      at Request.emit (node:events:390:28)
+      at Request.<anonymous> (/home/auntik/.yarn/releases/yarn-1.22.11.cjs:136146:10)
+      at Request.emit (node:events:390:28)
+      at IncomingMessage.<anonymous> (/home/auntik/.yarn/releases/yarn-1.22.11.cjs:136068:12)
+      at Object.onceWrapper (node:events:509:28)
+      at IncomingMessage.emit (node:events:402:35)
+      at endReadableNT (node:internal/streams/readable:1343:12)
+      at processTicksAndRejections (node:internal/process/task_queues:83:21)
+
+npm manifest: 
+  {
+    "name": "chat-application",
+    "version": "1.0.0",
+    "description": "First real-time nodjs chat application project",
+    "main": "app.js",
+    "scripts": {
+      "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+      "type": "git",
+      "url": "git+https://github.com/taauntik/chat-application-with-nodejs.git"
+    },
+    "author": "Tasnim Ahmed Auntik <devauntik@gmail.com>",
+    "license": "UNLICENCED",
+    "bugs": {
+      "url": "https://github.com/taauntik/chat-application-with-nodejs/issues"
+    },
+    "homepage": "https://github.com/taauntik/chat-application-with-nodejs#readme"
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile
