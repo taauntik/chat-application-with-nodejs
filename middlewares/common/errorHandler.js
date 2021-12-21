@@ -15,13 +15,12 @@ function errorHandler(err, req, res, next) {
   if (res.locals.html) {
     // html response
     res.render("error", {
-      title: "Error Page",
+      title: "Error page",
     });
   } else {
     // json response
     res.json(res.locals.error);
   }
-  res.render("error");
 }
 
 module.exports = {
