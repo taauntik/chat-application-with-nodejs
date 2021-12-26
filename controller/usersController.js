@@ -1,4 +1,4 @@
-// external errors
+// external imports
 const bcrypt = require("bcrypt");
 const { unlink } = require("fs");
 const path = require("path");
@@ -13,7 +13,7 @@ async function getUsers(req, res, next) {
     res.render("users", {
       users: users,
     });
-  } catch (error) {
+  } catch (err) {
     next(err);
   }
 }
@@ -26,8 +26,8 @@ async function addUser(req, res, next) {
   if (req.files && req.files.length > 0) {
     newUser = new User({
       ...req.body,
-      password: hashedPassword,
       avatar: req.files[0].filename,
+      password: hashedPassword,
     });
   } else {
     newUser = new User({
@@ -36,13 +36,13 @@ async function addUser(req, res, next) {
     });
   }
 
-  // save the user on send error
+  // save user or send error
   try {
     const result = await newUser.save();
     res.status(200).json({
       message: "User was added successfully!",
     });
-  } catch (error) {
+  } catch (err) {
     res.status(500).json({
       errors: {
         common: {

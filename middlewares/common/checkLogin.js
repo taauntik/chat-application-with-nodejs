@@ -1,6 +1,7 @@
 const jwt = require("jsonwebtoken");
 
-function checkLogin(req, res, next) {
+// auth guard to protect routes that need authentication
+const checkLogin = (req, res, next) => {
   let cookies =
     Object.keys(req.signedCookies).length > 0 ? req.signedCookies : null;
 
@@ -10,19 +11,19 @@ function checkLogin(req, res, next) {
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
       req.user = decoded;
 
-      // pass user into resposne locals
+      // pass user info to response locals
       if (res.locals.html) {
         res.locals.loggedInUser = decoded;
       }
       next();
-    } catch (error) {
+    } catch (err) {
       if (res.locals.html) {
         res.redirect("/");
       } else {
         res.status(500).json({
           errors: {
             common: {
-              msg: "Authentication faliure!",
+              msg: "Authentication failure!",
             },
           },
         });
@@ -33,12 +34,13 @@ function checkLogin(req, res, next) {
       res.redirect("/");
     } else {
       res.status(401).json({
-        error: "Authentication failure!",
+        error: "Authetication failure!",
       });
     }
   }
-}
+};
 
+// redirect already logged in user to inbox pabe
 const redirectLoggedIn = function (req, res, next) {
   let cookies =
     Object.keys(req.signedCookies).length > 0 ? req.signedCookies : null;
@@ -50,4 +52,7 @@ const redirectLoggedIn = function (req, res, next) {
   }
 };
 
-module.exports = { checkLogin, redirectLoggedIn };
+module.exports = {
+  checkLogin,
+  redirectLoggedIn,
+};

@@ -1,7 +1,7 @@
 // external imports
 const bcrypt = require("bcrypt");
-const createError = require("http-errors");
 const jwt = require("jsonwebtoken");
+const createError = require("http-errors");
 
 // internal imports
 const User = require("../models/People");
@@ -19,9 +19,6 @@ async function login(req, res, next) {
       $or: [{ email: req.body.username }, { mobile: req.body.username }],
     });
 
-    // destructure the user
-    const { name, mobile, email } = user;
-
     if (user && user._id) {
       const isValidPassword = await bcrypt.compare(
         req.body.password,
@@ -31,13 +28,14 @@ async function login(req, res, next) {
       if (isValidPassword) {
         // prepare the user object to generate token
         const userObject = {
-          username: name,
-          mobile,
-          email,
-          role: "user",
+          userid: user._id,
+          username: user.name,
+          email: user.email,
+          avatar: user.avatar || null,
+          role: user.role || "user",
         };
 
-        // generate the token
+        // generate token
         const token = jwt.sign(userObject, process.env.JWT_SECRET, {
           expiresIn: process.env.JWT_EXPIRY,
         });
@@ -49,24 +47,24 @@ async function login(req, res, next) {
           signed: true,
         });
 
-        // set loggedin user local identifier
+        // set logged in user local identifier
         res.locals.loggedInUser = userObject;
 
-        res.render("inbox");
+        res.redirect("inbox");
       } else {
-        throw createError("Login failed! please try again.");
+        throw createError("Login failed! Please try again.");
       }
     } else {
-      throw createError("Login failed! please try again.");
+      throw createError("Login failed! Please try again.");
     }
-  } catch (error) {
+  } catch (err) {
     res.render("index", {
       data: {
         username: req.body.username,
       },
       errors: {
         common: {
-          msg: error.message,
+          msg: err.message,
         },
       },
     });
@@ -76,7 +74,7 @@ async function login(req, res, next) {
 // do logout
 function logout(req, res) {
   res.clearCookie(process.env.COOKIE_NAME);
-  res.send("logged out!");
+  res.send("logged out");
 }
 
 module.exports = {
